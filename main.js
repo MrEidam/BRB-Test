@@ -60,7 +60,7 @@ for(let itemName in BRB.items){
           <img src="${imgsrc}">
           <div class="buttons" style="--Bcolor: ${color}">
             <button onclick="anbuy('${itemName}', 1);display()" class="buyone" id="${itemName}1">
-              Buy a ${itemName} for${ancostText(item.ancost)}
+              Buy a ${itemName} for ${anCostText(item.ancost)}
             </button>
             <button onclick="anbuy('${itemName}', 1);display()" class="buymax">
               MAX
@@ -104,23 +104,15 @@ function display(){
   document.getElementById('disclicksmake').innerHTML = `You're making ${fornum(cs)}`;
 }
 
-function ancostText(text){
-  let fin = '';
-  let and = true;
-  if(text.match(/,/)){
-    and = false;
-  }
-  text.split(",").forEach((el) => {
-    const sub0 = el.split("/");
-    
-    if(and){
-      fin += ` ${sub0[1]} ${sub0[0]} and`;
-      and = false;
-    }else{
-      fin += ` ${sub0[1]} ${sub0[0]}`;  
-    }
-  });
-  return fin;
+function anCostText(text){
+  let costs = text.split(',');
+  costs.forEach((v, i) => {
+      let val = v.split('/');
+      let name = val[1] == 1 ? val[0].slice(0, val[0].length - 1) : val[0];
+      costs[i] = `${val[1]} ${name}`;
+
+  })
+  return costs.join(' and ')
 }
 
 setInterval(()=>{
